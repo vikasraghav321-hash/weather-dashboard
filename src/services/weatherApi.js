@@ -38,6 +38,7 @@ export async function getWeather(latitude, longitude) {
     hourly: [
       "temperature_2m",
       "weather_code",
+      "visibility",
     ].join(","),
     daily: [
       "weather_code",

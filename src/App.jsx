@@ -67,6 +67,21 @@ function App() {
 
   const current = weather?.current;
 
+  
+const hourlyIndex =
+  weather?.hourly?.time?.indexOf(current?.time) ?? -1;
+
+const visibilityMeters =
+  hourlyIndex >= 0
+    ? weather.hourly.visibility[hourlyIndex]
+    : null;
+
+const visibilityKm =
+  visibilityMeters !== null
+    ? (visibilityMeters / 1000).toFixed(1)
+    : null;
+
+
   return (
     <div className="min-h-screen bg-slate-950 text-white p-6">
 
@@ -112,11 +127,21 @@ function App() {
               )}
             />
 
-            <WeatherDetails />
+          
+<WeatherDetails
+  humidity={current.relative_humidity_2m}
+  windSpeed={current.wind_speed_10m}
+  pressure={current.pressure_msl}
+  visibility={visibilityKm}
+/>
 
-            <HourlyForecast />
 
-            <WeeklyForecast />
+            <HourlyForecast
+  hourly={weather.hourly}
+  currentTime={current.time}
+/>
+
+          <WeeklyForecast daily={weather.daily} />
           </>
         )}
 
